@@ -6,22 +6,26 @@ while (!maxiumum) {                    // Jeżeli ktoś wpisał nieliczbę | Pat
 const targetNum = Math.floor(Math.random() * maxiumum) + 1;  //Generuje liczbę od 1 do wpisanej przez uzytkownika
 console.log(targetNum);
 
-let guess = parseInt(prompt('Enter your fisrt guess'));
+let guess = prompt('Enter your fisrt guess (type q to quit)'); //Usunięte z tą parseint aby gracz mógł wpisać q i wyjść z gry
 let attemps = 1;
 
 while (parseInt(guess) !== targetNum) {
     if (guess === 'q') break;
-    attemps++;
+    guess = parseInt(guess);    //Bierze jakakolwiek wartość z guess i dopiero teraz parseit to i updateuje to do guess variable
     if (guess > targetNum) {
         guess = prompt('To high, enter again');
-    } else {
+        attemps++;              // attemps przeniesiony do ifów aby nie aktualizował się jak ktoś wpisze nieliczbę
+    } else if (guess < targetNum) {
         guess = prompt('To low, enter again');
+        attemps++;
+    } else {
+        guess = prompt('Invalid guess. Please enter a number or q to quit') //Zmiana lekko logiki
     }
 }
-if (attemps <= 1) {
+if (guess === 'q') {
+    alert('You quit?! What a LOOOOOOSER');  //Zamiana if z else if aby nie wyskakiwał 2 alerty
+} else if (attemps <= 1) {
     alert(`You got it in ${attemps} guess`);
-} else if (guess === 'q') {
-    alert('You quit?! What a LOOOOOOSER');
 } else {
     alert(`You got it in ${attemps} guesses`);
 }
